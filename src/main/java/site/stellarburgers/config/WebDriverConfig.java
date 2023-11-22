@@ -5,21 +5,34 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class WebDriverConfig {
+    protected static WebDriver driver;
     public static final long WAIT_SEC_TIMEOUT = 10;
 
     public static WebDriver setDriver() {
-        // Чтобы запустить тесты в Яндекс  - 1) закомменть запуск в Chrome 2) Раскомменть запуск в Yandex
+        String browser = System.getProperty("browser");
+        if (browser == null) {
+            return createChromeDriver();
+        }
+        switch (browser) {
+            case "yandex":
+                return createYandexDriver();
+            case "chrome":
+            default:
+                return createChromeDriver();
+        }
+    }
 
-/*        //Запуск тестов в Chrome Browser
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        return driver;*/
-
-        //Запуск тестов в Yandex Browser
-        System.setProperty("webdriver.yandex.driver", "src/main/resources/yandexdriver.exe");
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
+    private static WebDriver createChromeDriver() {
+        ChromeOptions options = new ChromeOptions();
+        driver = new ChromeDriver(options);
         return driver;
     }
 
+    private static WebDriver createYandexDriver() {
+        System.setProperty("webdriver.yandex.driver", "src/main/resources/yandexdriver.exe");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+        return driver;
+    }
 }

@@ -1,5 +1,6 @@
 package site.stellarburgers.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import site.stellarburgers.user.User;
@@ -25,26 +26,31 @@ public class LoginPage {
         this.driver = driver;
     }
 
+   @Step("Получение текста логина из хедера")
     public String getLoginTextFromHeader() {
         return driver.findElement(headerLogin).getText();
     }
-
+    @Step("Заполнение поля email")
     public void setEmail(String email) {
         driver.findElement(inputEmail).sendKeys(email);
     }
 
+    @Step("Заполнение поля Пароль")
     public void setPassword(String password) {
         driver.findElement(inputPassword).sendKeys(password);
     }
 
+    @Step("Клик по кнопке Логин")
     public void clickLoginButton() {
         driver.findElement(btnLogin).click();
     }
 
+    @Step("Клик по кнопке Профиль")
     public void clickProfileButton() {
         driver.findElement(btnProfile).click();
     }
 
+    @Step("Логин юзером")
     public void loginUser(User user){
         setEmail(user.getEmail());
         setPassword(user.getPassword());

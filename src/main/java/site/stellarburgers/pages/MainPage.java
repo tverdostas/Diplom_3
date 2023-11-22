@@ -1,5 +1,6 @@
 package site.stellarburgers.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import site.stellarburgers.utils.BackToMainDetails;
@@ -35,53 +36,66 @@ public class MainPage {
         this.driver = driver;
     }
 
+    @Step("Клик по Лого")
     public void clickLogoButton() {
         driver.findElement(btnLogo).click();
     }
 
+    @Step("Клик по кнопке Конструктора")
     public void clickConstructorButton() {
         driver.findElement(btnConstructor).click();
     }
 
+    @Step("Клик по кнопке Логин")
     public void clickLoginButton() {
         driver.findElement(btnLogin).click();
     }
 
+    @Step("Клик по табе Булки")
     public void clickBunsButton() {
         driver.findElement(btnBuns).click();
     }
 
+    @Step("Клик по табе Соусы")
     public void clickSaucesButton() {
         driver.findElement(btnSauces).click();
     }
 
+    @Step("Клик по табе Начинки")
     public void clickFillingsButton() {
         driver.findElement(btnFillings).click();
     }
 
+    @Step("Получение текста из хедера")
     public String getCreateBurgerTextFromHeader() {
         return driver.findElement(headerCreateBurger).getText();
     }
 
+    @Step("Кнопка Булки доступна")
     public boolean btnBunsIsEnabled() {
         return driver.findElement(btnBunsIsCurrent).isEnabled();
     }
+
+    @Step("Кнопка Соусы доступна")
     public boolean btnSaucesIsEnabled() {
         return driver.findElement(btnSaucesIsCurrent).isEnabled();
     }
 
+    @Step("Кнопка Начинки доступна")
     public boolean btnFillingsIsEnabled() {
         return driver.findElement(btnFillingsIsCurrent).isEnabled();
     }
 
+    @Step("Клик по кнопке Профиля")
     public void clickProfileButton() {
         driver.findElement(btnProfile).click();
     }
 
+    @Step("Вернуться на главную страницу")
     public void backToMainPage(String button) {
-        if(button.equals(BackToMainDetails.LOGO_BACK_TO_MAIN_PAGE)){
+        if (button.equals(BackToMainDetails.LOGO_BACK_TO_MAIN_PAGE)) {
             clickLogoButton();
-        }else{
+        } else {
             clickConstructorButton();
         }
     }

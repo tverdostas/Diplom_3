@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.RandomStringUtils;
 import site.stellarburgers.config.AppConfig;
 import site.stellarburgers.config.BaseURI;
 import site.stellarburgers.config.WebDriverConfig;
@@ -23,6 +24,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class GoToProfileTests {
 
     private WebDriver driver;
+    private final String password = RandomStringUtils.randomAlphabetic(10);
+    private final String email = RandomStringUtils.randomAlphabetic(10) + "@gmail.com";
 
     @Before
     public void setup() {
@@ -46,7 +49,6 @@ public class GoToProfileTests {
         loginPage.loginUser(user);
 
         Assert.assertTrue(profilePage.btnProfileTabIsEnabled());
-        UserOperations.deleteUser(UserOperations.getAccessToken(user));
     }
 
     @Test
@@ -61,7 +63,11 @@ public class GoToProfileTests {
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
+        String accessTokenUI = UserOperations.loginUser(new User(email, password)).then().extract().path("accessToken");
+        if (accessTokenUI != null) {
+            UserOperations.deleteUser(accessTokenUI);
+        }
         driver.quit();
     }
 }
